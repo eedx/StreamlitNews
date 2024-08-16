@@ -13,7 +13,7 @@ def show_form():
 col1, col2 = st.columns(2, gap='medium', vertical_alignment='center')
 
 with col1:
-    st.image('./assets/profile-pic.png', width=225)
+    st.image('./assets/picture.png', width=225)
 
 with col2:
     st.title('Eduardo Peña', anchor=False)
@@ -25,7 +25,7 @@ with col2:
         'Ofrezco soluciones impulsadas por IA y genero desarrollos enfocados en mejoras basadas en datos\n'
     )
 
-    if st.button('Contáctame'):
+    if st.button('Contáctame ✉️'):
         show_form()
 
 
