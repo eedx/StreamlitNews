@@ -1,6 +1,5 @@
 import streamlit as st
 import openai
-import time
 
 
 ## --- OPENAI KEY CONFIGURATION
@@ -31,7 +30,7 @@ def get_chatbot_response(prompt: str):
     Returns:
         str: Answer message from OpenAI API
     """    
-    response = openai.chat.completions.create(
+    stream = openai.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": "You're an expert educative assistant with a vast knowledge in news, misinformation and Colombian politics. Your job is to answer questions in order to help people learn about those topics. The answer should be in Spanish and trying to be as concise as possible"},
@@ -44,18 +43,13 @@ def get_chatbot_response(prompt: str):
         presence_penalty=0,
         response_format={
             "type": "text"
-        }
+        },
+        stream=True
     )
-    message = response.choices[0].message.content
-
-    #for word in message.split():
-    #    yield word + ' '
-    #    time.sleep(0.02)
-
-    # NOTA: BUSCAR CÓMO USAR UN GENERADOR SIN MODIFICAR EL FORMATO DEL TEXTO
-    # PARA DAR EL EFECTO DE ANIMACIÓN AL REALIZAR CONSULTAS
-
-    return message
+    
+    for chunk in stream:
+        if chunk.choices[0].delta.content is not None:
+            yield chunk.choices[0].delta.content
 
 
 ## --- MESSAGE WRITING
@@ -78,7 +72,7 @@ def message_main():
                 st.markdown(prompt)
 
             with st.chat_message('assistant'):
-                response = st.write(get_chatbot_response(prompt=prompt))
+                response = st.write_stream(get_chatbot_response(prompt=prompt))
             st.session_state.messages.append({
                 'role': 'assistant',
                 'content': response
