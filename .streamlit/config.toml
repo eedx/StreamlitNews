@@ -5,6 +5,9 @@ toolbarMode = "minimal"
 base = "dark"
 primaryColor = "#66fcf1"
 backgroundColor = "#0b0c10"
-secondaryBackgroundColor = "#1f2833"
+secondaryBackgroundColor = "#222324"
 textColor = "#c5c6c7"
 font = "monospace"
+
+[server]
+enableStaticServing = true
