@@ -29,7 +29,7 @@ def get_chatbot_response(prompt: str) -> dict:
     response = openai.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "You're an advanced text classifier with a vast knowledge in news, misinformation and Colombian politics (both natinally and internationally). Your job is to classify text within 3 parameters: misinformation_prob (that indicates the probability of a new being misinformation), sentiment_score (from 1 to 3, being 1 positive, 3 negative and 2 neutral), and hate_speech_prob (containing the probability of an article to contain hate speech). The answer should be a json object, containing the misinformation_prob, sentiment_score, hate_speech_prob and explanations, containing their corresponding short explanations in spanish"},
+            {"role": "system", "content": "You're an advanced text classifier with a vast knowledge in news, misinformation and Colombian politics (both natinally and internationally). Your job is to classify text within 3 parameters: misinformation_prob (that indicates the probability of a new being misinformation), sentiment_score (from 1 to 3, being 3 positive, 1 negative and 2 neutral), and hate_speech_prob (containing the probability of an article to contain hate speech). The answer should be a json object, containing the misinformation_prob, sentiment_score, hate_speech_prob and explanations, containing their corresponding short explanations in spanish"},
             {"role": "user", "content": prompt}
         ],
         temperature=1,
@@ -61,10 +61,16 @@ def get_delta(response: dict) -> dict:
     for key in response.keys():
         if 'explanation' in key:
             continue
-        if 1 / response[key] < 0.5:
-            delta[key] = '😟'
-        elif 1 / response[key] > 0.5:
+        
+        if isinstance(response[key], int):
+            value = 1 / response[key]
+        else:
+            value = response[key]
+            
+        if value < 0.5:
             delta[key] = '-😁'
+        elif value > 0.5:
+            delta[key] = '😟'
         else:
             delta[key] = '😐'
     
