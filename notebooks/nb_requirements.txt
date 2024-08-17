@@ -1,0 +1,12 @@
+eventregistry==9.1
+googletrans==3.1.0a0
+langchain==0.2.14
+langchain-community==0.2.12
+langchain-core==0.2.33
+matplotlib==3.9.2
+seaborn==0.13.1
+torch
+torchtext==0.18.0
+tqdm==4.66.5
+transformers==4.42.4
+ydata-profiling==4.9.0
