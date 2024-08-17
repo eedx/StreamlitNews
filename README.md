@@ -30,6 +30,7 @@ Para activar el servidor de Streamlit, tanto en local como en GitHub Codespaces,
 ```bash
 streamlit run app.py
 ```
+Dentro de la carpeta `.streamlit` se deberá crear un archivo `secrets.toml`, en el que se incluirá la variable `OPENAI_API_KEY=sk...` para poder emplear dicha API de manera exitosa, así como la variable `WEBHOOK_URL=...` que facilitará el servicio de recepción de correos electrónicos.
 
 ## Recomendaciones
 - En caso de utilizar este proyecto como base para desarrollar otros similares, será necesario modificar la página `about_me.py`, ya que la misma contiene información personal, y no debe ser utilizada por terceros.
